@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Code, Palette, Database, Cloud, Cpu, Globe } from 'lucide-react';
 
 const Skills = () => {
   const [ref, inView] = useInView({ threshold: 0.3, triggerOnce: true });
@@ -13,12 +14,12 @@ const Skills = () => {
   }, [inView, animationTriggered]);
 
   const skills = [
-    { name: 'JavaScript/TypeScript', level: 95, color: 'from-yellow-400 to-orange-500' },
-    { name: 'React.js', level: 92, color: 'from-blue-400 to-cyan-500' },
-    { name: 'Node.js', level: 88, color: 'from-green-400 to-emerald-500' },
-    { name: 'Python', level: 85, color: 'from-blue-500 to-indigo-600' },
-    { name: 'UI/UX Design', level: 90, color: 'from-purple-400 to-pink-500' },
-    { name: 'Database Design', level: 83, color: 'from-red-400 to-rose-500' },
+    { name: 'JavaScript/TypeScript', level: 95, color: 'from-yellow-400 to-orange-500', icon: Code },
+    { name: 'React.js', level: 92, color: 'from-blue-400 to-cyan-500', icon: Globe },
+    { name: 'Node.js', level: 88, color: 'from-green-400 to-emerald-500', icon: Cpu },
+    { name: 'Python', level: 85, color: 'from-blue-500 to-indigo-600', icon: Code },
+    { name: 'UI/UX Design', level: 90, color: 'from-purple-400 to-pink-500', icon: Palette },
+    { name: 'Database Design', level: 83, color: 'from-red-400 to-rose-500', icon: Database },
   ];
 
   const technologies = [
@@ -28,10 +29,18 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-white dark:bg-gray-800 relative overflow-hidden transition-colors duration-500">
+    <section id="skills" className="py-20 my-20 bg-white dark:bg-gray-800 relative overflow-hidden transition-colors duration-500">
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-500/5 dark:bg-blue-500/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-purple-500/5 dark:bg-purple-500/5 rounded-full blur-3xl"></div>
+        
+        {/* Floating icons */}
+        <div className="absolute top-10 right-20 animate-float">
+          <Cloud className="w-6 h-6 text-blue-400/30 animate-pulse" />
+        </div>
+        <div className="absolute bottom-20 left-20 animate-float" style={{ animationDelay: '1s' }}>
+          <Database className="w-8 h-8 text-purple-400/30 animate-pulse" />
+        </div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10" ref={ref}>
@@ -49,20 +58,26 @@ const Skills = () => {
           {/* Skill Bars */}
           <div className="space-y-8 animate-fade-in">
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Core Competencies</h3>
-            {skills.map((skill, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold">{skill.level}%</span>
+            {skills.map((skill, index) => {
+              const IconComponent = skill.icon;
+              return (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                      <IconComponent className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                      <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
+                    </div>
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold">{skill.level}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                    <div 
+                      className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out`}
+                      style={{ width: animationTriggered ? `${skill.level}%` : '0%' }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                  <div 
-                    className={`h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out`}
-                    style={{ width: animationTriggered ? `${skill.level}%` : '0%' }}
-                  ></div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Technologies */}

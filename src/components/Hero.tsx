@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, Download, ArrowRight, Sparkles, Zap, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
@@ -28,18 +28,39 @@ const Hero = () => {
     return () => clearInterval(typeWriter);
   }, [currentIndex]);
 
+  const handleDownloadResume = () => {
+    // Create a temporary link to download the PDF
+    const link = document.createElement('a');
+    link.href = '/resume.pdf'; // You'll need to add your resume.pdf to the public folder
+    link.download = 'Nilesh_Giri_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-purple-900 dark:to-violet-900 transition-colors duration-500">
+    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-purple-900 dark:to-violet-900 transition-colors duration-500 pt-20 pb-20">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/20 dark:bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 dark:bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-pink-500/20 dark:bg-pink-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+        
+        {/* Floating animated icons */}
+        <div className="absolute top-20 left-20 animate-float">
+          <Sparkles className="w-8 h-8 text-blue-400/50 animate-pulse" />
+        </div>
+        <div className="absolute top-32 right-32 animate-float" style={{ animationDelay: '1s' }}>
+          <Zap className="w-6 h-6 text-purple-400/50 animate-pulse" />
+        </div>
+        <div className="absolute bottom-32 left-32 animate-float" style={{ animationDelay: '2s' }}>
+          <Star className="w-7 h-7 text-pink-400/50 animate-pulse" />
+        </div>
       </div>
 
       <div className="container mx-auto px-6 text-center z-10 relative">
         <div className="animate-fade-in">
-          <div className="mb-8 relative">
+          <div className="mb-12 relative">
             <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-white/50 dark:border-white/20 shadow-2xl backdrop-blur-sm animate-scale-in hover:scale-110 transition-transform duration-500">
               <img 
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
@@ -68,7 +89,10 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in" style={{ animationDelay: '500ms' }}>
-            <button className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 flex items-center gap-2">
+            <button 
+              onClick={handleDownloadResume}
+              className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 flex items-center gap-2"
+            >
               <Download size={20} />
               Download Resume
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
